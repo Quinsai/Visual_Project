@@ -15,7 +15,7 @@ const colors = [
 ]
 
 let provinceData = []
-let provinceColor = []
+let provinceRegion = []
 
 onMounted(() => {
 
@@ -48,23 +48,35 @@ onMounted(() => {
       else {
         aqiColor = colors[5].color
       }
-      provinceColor.push({
-        name: provinceData[i].province.slice(0, 2),
+      let provinceName = provinceData[i].province.slice(0, 2)
+      let tooltipContent = [
+        '地区: ' + provinceName,
+        'AQI: ' + aqiData
+      ].join('<br>')
+      provinceRegion.push({
+        name: provinceName,
         itemStyle: {
           areaColor: aqiColor,
           color: aqiColor
+        },
+        tooltip: {
+          show: true,
+          position: 'right',
+          formatter: tooltipContent
         }
       })
     }
 
     $.get('https://geojson.cn/api/data/china.json', function (china) {
-      console.log(provinceData)
       echarts.registerMap('china', china)
       const map = echarts.init(document.getElementById('map-container'))
       map.setOption({
         geo: {
           map: 'china',
-          regions: provinceColor
+          regions: provinceRegion,
+        },
+        tooltip: {
+          trigger: 'item',
         }
       })
     })
