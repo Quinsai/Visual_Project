@@ -6,12 +6,12 @@ import axios from "axios";
 import {prefixUrl} from "@/main.js";
 
 const colors = [
-  {range: "<70", color: "#a7f3d0"},
-  {range: "70-100", color: "#6ee7b7"},
-  {range: "100-130", color: "#34d399"},
-  {range: "130-160", color: "#10b981"},
-  {range: "160-190", color: "#059669"},
-  {range: ">190", color: "#047857"}
+  {range: "<70", color: "#00E400"},
+  {range: "70-100", color: "#FFFF00"},
+  {range: "100-130", color: "#FF7E00"},
+  {range: "130-160", color: "#FF0000"},
+  {range: "160-190", color: "#8F3F97"},
+  {range: ">190", color: "#7E0023"}
 ]
 
 let provinceData = []
@@ -48,7 +48,14 @@ onMounted(() => {
       else {
         aqiColor = colors[5].color
       }
-      let provinceName = provinceData[i].province.slice(0, 2)
+      let fullName = provinceData[i].province
+      let provinceName
+      if (fullName[0] === '内' || fullName[0] === '黑') {
+        provinceName = provinceData[i].province.slice(0, 3)
+      }
+      else {
+        provinceName = provinceData[i].province.slice(0, 2)
+      }
       let tooltipContent = [
         '地区: ' + provinceName,
         'AQI: ' + aqiData
