@@ -54,10 +54,9 @@ def get_aqi(request):
 
 def get_pollutants(request):
     year = request.GET.get("year", None)
-    province = request.GET.get("province", None)
-    if year is None or year == '' or province is None or province == '':
+    province_id = request.GET.get("province_id", None)
+    if year is None or year == '' or province_id is None or province_id == '':
         return para_error()
-    province_id = find_keys_by_value(province_data, province)[0]
     data = AirData.objects.filter(year=year, province_id=province_id).all()
     if data.count() == 0:
         return para_error()
@@ -80,10 +79,8 @@ def get_pollutants(request):
 def add_air_data(request):
     data = json.loads(request.body.decode('utf-8'))
     year = data['year']
-    print(year)
     data_list = data['list']
     for d in data_list:
-        print(d)
         province_id = find_keys_by_value(province_data, d['province'])[0]
         AirData.objects.create(year=year,
                                month=months.get(d['month']),
