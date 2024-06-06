@@ -2,6 +2,7 @@
 import Map from "@/components/Map.vue";
 import SelectYear from "@/components/SelectYear.vue";
 import AqiLine from "@/components/AqiLine.vue";
+import AreaChart from "./components/AreaChart.vue";
 </script>
 
 <template>
@@ -20,6 +21,9 @@ import AqiLine from "@/components/AqiLine.vue";
       </div>
       <div class="out-of-aqiline">
         <AqiLine></AqiLine>
+      </div>
+      <div class="out-of-map">
+        <AreaChart></AreaChart>
       </div>
     </div>
   </div>
