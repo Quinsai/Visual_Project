@@ -13,6 +13,7 @@ from django.db.models import Avg
 def get_average_aqi(request):
     year = request.GET.get('year', None)
     print(year)
+
     if year is None or year == '':
         return para_error()
     data = YearData.objects.filter(year=year).all()
@@ -24,7 +25,7 @@ def get_average_aqi(request):
         province_list.append({
             'province': province_data.get(p_id),
             'province_id': p_id,
-            'average_aqi': province.average_aqi
+            'average_aqi': "{:.2f}".format(province.average_aqi)
         })
     return JsonResponse({
         'province_list': province_list
@@ -41,22 +42,39 @@ def get_aqi(request):
         return para_error()
     month_list = []
     for month in range(1, 13):
+        month_data = data.filter(month=month).first()
         month_list.append({
             'month': month,
-            'aqi': data.filter(month=month).first().aqi
+            'aqi': "{:.2f}".format(month_data.aqi)
         })
     return JsonResponse({
         'month_list': month_list
     })
 
 
-"""def get_pollutants(request):
+def get_pollutants(request):
     year = request.GET.get("year", None)
     province = request.GET.get("province", None)
     if year is None or year == '' or province is None or province == '':
         return para_error()
-    province_id = find_keys_by_value(province_data, province)
-    """
+    province_id = find_keys_by_value(province_data, province)[0]
+    data = AirData.objects.filter(year=year, province_id=province_id).all()
+    if data.count() == 0:
+        return para_error()
+    month_list = []
+    for month in range(1, 13):
+        month_data = data.filter(month=month).first()
+        month_list.append({
+            'month': find_keys_by_value(months, month)[0],
+            'PM2_5': "{:.2f}".format(month_data.pm25),
+            'PM10': "{:.2f}".format(month_data.pm10),
+            'SO2': "{:.2f}".format(month_data.so2),
+            'NO2': "{:.2f}".format(month_data.no2),
+            'O3': "{:.2f}".format(month_data.o3)
+        })
+    return JsonResponse({
+        'month_list': month_list
+    })
 
 
 def add_air_data(request):
