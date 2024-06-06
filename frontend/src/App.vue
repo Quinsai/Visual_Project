@@ -3,6 +3,7 @@ import Map from "@/components/Map.vue";
 import SelectYear from "@/components/SelectYear.vue";
 import AqiLine from "@/components/AqiLine.vue";
 import AreaChart from "./components/AreaChart.vue";
+import BarChart from "./components/BarChart.vue";
 </script>
 
 <template>
@@ -11,12 +12,12 @@ import AreaChart from "./components/AreaChart.vue";
       <div class="title">
         空气质量监测
       </div>
-      <div class="out-of-year-select">
+      <!-- <div class="out-of-year-select">
         <SelectYear></SelectYear>
-      </div>
+      </div> -->
     </div>
     <div class="out-of-graphic">
-      <div class="out-of-map">
+      <!-- <div class="out-of-map">
         <Map></Map>
       </div>
       <div class="out-of-aqiline">
@@ -24,6 +25,9 @@ import AreaChart from "./components/AreaChart.vue";
       </div>
       <div class="out-of-map">
         <AreaChart></AreaChart>
+      </div> -->
+      <div class="out-of-map">
+        <BarChart></BarChart>
       </div>
     </div>
   </div>
