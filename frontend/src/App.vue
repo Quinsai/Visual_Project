@@ -1,5 +1,7 @@
 <script setup>
 import Map from "@/components/Map.vue";
+import SelectYear from "@/components/SelectYear.vue";
+import AqiLine from "@/components/AqiLine.vue";
 </script>
 
 <template>
@@ -8,10 +10,16 @@ import Map from "@/components/Map.vue";
       <div class="title">
         空气质量监测
       </div>
+      <div class="out-of-year-select">
+        <SelectYear></SelectYear>
+      </div>
     </div>
     <div class="out-of-graphic">
       <div class="out-of-map">
         <Map></Map>
+      </div>
+      <div class="out-of-aqiline">
+        <AqiLine></AqiLine>
       </div>
     </div>
   </div>
@@ -25,24 +33,34 @@ import Map from "@/components/Map.vue";
   flex-wrap: wrap;
   .out-of-title {
     width: 100%;
-    height: 15%;
+    height: 12%;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: nowrap;
     .title {
       height: fit-content;
       font-size: 20px;
     }
+    .out-of-year-select {
+      position: absolute;
+      right: 10px;
+    }
   }
   .out-of-graphic {
     width: 100%;
-    height: 85%;
+    height: 88%;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     .out-of-map {
       width: 70%;
-      height: 80%;
+      height: 75%;
+    }
+    .out-of-aqiline {
+      width: 70%;
+      height: 25%;
     }
   }
 }
