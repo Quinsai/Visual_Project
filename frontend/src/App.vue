@@ -1,5 +1,6 @@
 <script setup>
 import Map from "@/components/Map.vue";
+import AreaChart from "./components/AreaChart.vue";
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import Map from "@/components/Map.vue";
     <div class="out-of-graphic">
       <div class="out-of-map">
         <Map></Map>
+        <AreaChart></AreaChart>
       </div>
     </div>
   </div>
