@@ -1,9 +1,11 @@
 <script setup>
-import {onMounted} from "vue";
+import {onMounted, watch} from "vue";
 import * as echarts from "echarts";
 import $ from 'jquery'
 import axios from "axios";
 import {prefixUrl} from "@/main.js";
+import {useYearStore} from "@/stores/year.js";
+import {useProvinceStore} from "@/stores/province.js";
 
 const colors = [
   {range: "<70", color: "#00E400"},
@@ -14,83 +16,104 @@ const colors = [
   {range: ">190", color: "#7E0023"}
 ]
 
+const year = useYearStore()
+const province = useProvinceStore()
+
 let provinceData = []
 let provinceRegion = []
 
-onMounted(() => {
-
-  const getDataAndLoadMap = async () => {
-    const response = await axios.get(prefixUrl + "/api/provinces/average-aqi", {
-      params: {
-        year: 2013
-      }
-    })
-    provinceData = response.data.province_list
-
-    for (let i = 0; i <provinceData.length; i++) {
-      let aqiData = provinceData[i].average_aqi
-      let aqiColor
-      if (aqiData < 70) {
-        aqiColor = colors[0].color
-      }
-      else if (aqiData < 100) {
-        aqiColor = colors[1].color
-      }
-      else if (aqiData < 130) {
-        aqiColor = colors[2].color
-      }
-      else if (aqiData < 160) {
-        aqiColor = colors[3].color
-      }
-      else if (aqiData < 190) {
-        aqiColor = colors[4].color
-      }
-      else {
-        aqiColor = colors[5].color
-      }
-      let fullName = provinceData[i].province
-      let provinceName
-      if (fullName[0] === '内' || fullName[0] === '黑') {
-        provinceName = provinceData[i].province.slice(0, 3)
-      }
-      else {
-        provinceName = provinceData[i].province.slice(0, 2)
-      }
-      let tooltipContent = [
-        '地区: ' + provinceName,
-        'AQI: ' + aqiData
-      ].join('<br>')
-      provinceRegion.push({
-        name: provinceName,
-        itemStyle: {
-          areaColor: aqiColor,
-          color: aqiColor
-        },
-        tooltip: {
-          show: true,
-          position: 'right',
-          formatter: tooltipContent
-        }
-      })
+const getDataAndLoadMap = async (year) => {
+  const response = await axios.get(prefixUrl + "/api/provinces/average-aqi", {
+    params: {
+      year: year
     }
+  })
+  provinceData = response.data.province_list
 
-    $.get('https://geojson.cn/api/data/china.json', function (china) {
-      echarts.registerMap('china', china)
-      const map = echarts.init(document.getElementById('map-container'))
-      map.setOption({
-        geo: {
-          map: 'china',
-          regions: provinceRegion,
-        },
-        tooltip: {
-          trigger: 'item',
-        }
-      })
+  for (let i = 0; i <provinceData.length; i++) {
+    let aqiData = provinceData[i].average_aqi
+    let aqiColor
+    if (aqiData < 70) {
+      aqiColor = colors[0].color
+    }
+    else if (aqiData < 100) {
+      aqiColor = colors[1].color
+    }
+    else if (aqiData < 130) {
+      aqiColor = colors[2].color
+    }
+    else if (aqiData < 160) {
+      aqiColor = colors[3].color
+    }
+    else if (aqiData < 190) {
+      aqiColor = colors[4].color
+    }
+    else {
+      aqiColor = colors[5].color
+    }
+    let fullName = provinceData[i].province
+    let provinceName
+    if (fullName[0] === '内' || fullName[0] === '黑') {
+      provinceName = provinceData[i].province.slice(0, 3)
+    }
+    else {
+      provinceName = provinceData[i].province.slice(0, 2)
+    }
+    let tooltipContent = [
+      '地区: ' + provinceName,
+      'AQI: ' + aqiData
+    ].join('<br>')
+    provinceRegion.push({
+      name: provinceName,
+      itemStyle: {
+        areaColor: aqiColor,
+        color: aqiColor
+      },
+      tooltip: {
+        show: true,
+        position: 'right',
+        formatter: tooltipContent
+      },
+      data: {
+        provinceId: provinceData[i].province_id
+      }
     })
   }
 
-  getDataAndLoadMap()
+  $.get('https://geojson.cn/api/data/china.json', function (china) {
+    echarts.registerMap('china', china)
+    const map = echarts.init(document.getElementById('map-container'))
+    map.setOption({
+      geo: {
+        map: 'china',
+        regions: provinceRegion,
+      },
+      tooltip: {
+        trigger: 'item',
+      }
+    })
+
+    map.on('click', (params) => {
+      province.setSelectedProvince(province, {
+        id: params.region.data.provinceId,
+        name: params.region.name,
+      })
+    })
+  })
+}
+
+onMounted(() => {
+  getDataAndLoadMap(2013)
 })
+
+watch(
+  () => year.getSelectedYear,
+  (value, oldValue) => {
+    if (value !== oldValue) {
+      getDataAndLoadMap(value)
+    }
+  }
+)
 </script>
 
 <template>
