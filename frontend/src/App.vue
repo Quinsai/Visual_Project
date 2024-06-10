@@ -12,12 +12,12 @@ import BarChart from "./components/BarChart.vue";
       <div class="title">
         空气质量监测
       </div>
-      <!-- <div class="out-of-year-select">
+      <div class="out-of-year-select">
         <SelectYear></SelectYear>
-      </div> -->
+      </div>
     </div>
     <div class="out-of-graphic">
-      <!-- <div class="out-of-map">
+      <div class="out-of-map">
         <Map></Map>
       </div>
       <div class="out-of-aqiline">
@@ -25,10 +25,10 @@ import BarChart from "./components/BarChart.vue";
       </div>
       <div class="out-of-map">
         <AreaChart></AreaChart>
-      </div> -->
-      <div class="out-of-map">
-        <BarChart></BarChart>
       </div>
+      <!-- <div class="out-of-map">
+        <BarChart></BarChart>
+      </div> -->
     </div>
   </div>
 </template>

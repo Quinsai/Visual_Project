@@ -1,14 +1,19 @@
 <script setup>
-import {onMounted} from "vue";
+import {onMounted, watch} from "vue";
 import * as echarts from "echarts";
 import axios from "axios";
 import {prefixUrl} from "@/main.js";
+import {useYearStore} from "@/stores/year.js";
+import {useProvinceStore} from "@/stores/province.js";
 
-onMounted(async() => {
+const year = useYearStore()
+const province = useProvinceStore()
+
+const loadAreaChart = async(year, province_id) => {
     const response = await axios.get(prefixUrl + "/api/province/allPollutants", {
       params: {
-        year: 2013,
-        province: '上海'
+        year: year,
+        province_id: province_id
       }
     })
     const monthList = response.data.month_list;
@@ -44,7 +49,7 @@ onMounted(async() => {
             {
                 type: 'category',
                 boundaryGap: false,
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             }
         ],
         yAxis: [
@@ -78,7 +83,7 @@ onMounted(async() => {
                 emphasis: {
                     focus: 'series'
                 },
-                data: [140, 232, 101, 264, 90, 340, 250]
+                data: []
             },
             {
                 name: 'PM10',
@@ -105,7 +110,7 @@ onMounted(async() => {
                 emphasis: {
                     focus: 'series'
                 },
-                data: [120, 282, 111, 234, 220, 340, 310]
+                data: []
             },
             {
                 name: 'SO2',
@@ -132,7 +137,7 @@ onMounted(async() => {
                 emphasis: {
                     focus: 'series'
                 },
-                data: [320, 132, 201, 334, 190, 130, 220]
+                data: []
             },
             {
                 name: 'NO2',
@@ -159,7 +164,7 @@ onMounted(async() => {
                 emphasis: {
                     focus: 'series'
                 },
-                data: [220, 402, 231, 134, 190, 230, 120]
+                data: []
             },
             {
                 name: 'O3',
@@ -190,7 +195,7 @@ onMounted(async() => {
                 emphasis: {
                     focus: 'series'
                 },
-                data: [220, 302, 181, 234, 210, 290, 150]
+                data: []
             }
         ]
     };
@@ -204,8 +209,20 @@ onMounted(async() => {
     }
     
     option && myChart.setOption(option);
+}
+
+onMounted(() => {
+    loadAreaChart(2013, 5)
 })
 
+watch(
+  () => [year.getSelectedYear, province.getSelectedProvince],
+  (value, oldValue) => {
+    if (value !== oldValue) {
+      loadAreaChart(year.getSelectedYear, province.getSelectedProvince.provinceId)
+    }
+  }
+)
 </script>
 
 <template>
