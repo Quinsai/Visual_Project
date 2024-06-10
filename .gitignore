@@ -6,4 +6,4 @@
 /backend/2016_json
 /backend/2017_json
 /backend/2018_json
-
+*.pyc
