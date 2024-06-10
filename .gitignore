@@ -1,0 +1,9 @@
+/backend/air/migrations/0001_initial.py
+/backend/2014_json
+/backend/air/migrations/0002_alter_airdata_aqi_alter_airdata_co_alter_airdata_no2_and_more.py
+/backend/2013_json
+/backend/2015_json
+/backend/2016_json
+/backend/2017_json
+/backend/2018_json
+*.pyc
