@@ -7,9 +7,9 @@ import {useYearStore} from "@/stores/year.js";
 import {usePollutantStore} from "@/stores/pollutant.js";
 
 const year = useYearStore()
-const pollutant_id = usePollutantStore()
+const pollutant = usePollutantStore()
 
-const loadBarChart = async(year, pollutant_id) => {
+const loadBarChart = async(year, pollutant_id, pollutant_name) => {
     const response = await axios.get(prefixUrl + "/api/provinces/onePollutant", {
       params: {
         year: year,
@@ -27,7 +27,11 @@ const loadBarChart = async(year, pollutant_id) => {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                type: 'shadow'
+                type: 'shadow',
+            },
+            valueFormatter: (value) => {
+                if(pollutant_id == 4) return value + ' mg/m³'
+                else return value + ' μg/m³'
             }
         },
         grid: {
@@ -49,6 +53,7 @@ const loadBarChart = async(year, pollutant_id) => {
         },
         series: [
             {
+                name: pollutant_name,
                 data: [],
                 type: 'bar'
             }
@@ -64,35 +69,40 @@ const loadBarChart = async(year, pollutant_id) => {
 }
 
 onMounted(() => {
-    loadBarChart(2013, 0)
+    loadBarChart(2013, 0, 'PM2.5')
 })
 watch(
-  () => [year.getSelectedYear, pollutant_id.getSelectedPollutant],
+  () => [year.getSelectedYear, pollutant.getSelectedPollutant.pollutantId],
   (value, oldValue) => {
     if (value !== oldValue) {
-        console.log('aaa')
-        loadBarChart(year.getSelectedYear, pollutant_id.getSelectedPollutant)
+        loadBarChart(year.getSelectedYear, pollutant.getSelectedPollutant.pollutantId, pollutant.getSelectedPollutant.pollutantName)
     }
   }
 )
 
-const handleSelect = (value) => {
-  pollutant_id.setSelectedPollutant(pollutant_id, value)
+const handleSelect = (item) => {
+    console.log(item)
+    pollutant.setSelectedPollutant(pollutant, item.value, item.label)
 }
+
+const map = [
+    {value: 0, label: 'PM2.5'},
+    {value: 1, label: 'PM10'},
+    {value: 2, label: 'SO2'},
+    {value: 3, label: 'NO2'},
+    {value: 4, label: 'CO'},
+    {value: 5, label: 'O3'},
+]
 </script>
 
 <template>
-    <a-select 
-        placeholder="PM2.5" 
-        :style="{width: '40%', height: '5%', background: 'rgb(22, 93, 255)', color: 'white',  'input::placeholder': {color: 'white'}}"  
-        @change="value => handleSelect(value)"
+    <a-select  
+        :style="{width: '40%', height: '5%', background: 'rgb(22, 93, 255)', color: 'white'}"  
+        @change="(item) => handleSelect(item)"
+        v-model="value"
+        :default-value="map[0]"
     >
-        <a-option :value="0">PM2.5</a-option>
-        <a-option :value="1">PM10</a-option>
-        <a-option :value="2">SO2</a-option>
-        <a-option :value="3">NO2</a-option>
-        <a-option :value="4">CO</a-option>
-        <a-option :value="5">O3</a-option>
+        <a-option v-for="item of map" :value="item" :label="item.label" />
     </a-select>
     <div id="main"></div>
 </template>
