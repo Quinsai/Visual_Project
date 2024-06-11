@@ -7,5 +7,6 @@ urlpatterns = [
     path("provinces/average-aqi", views.get_average_aqi),
     path("add-data", views.add_air_data),
     path("add-year-data", views.add_year_data),
-    path("province/allPollutants", views.get_pollutants)
+    path("province/allPollutants", views.get_pollutants),
+    path("provinces/onePollutant", views.get_pollutant)
 ]
