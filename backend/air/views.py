@@ -116,7 +116,7 @@ def get_pollutant(request):
             value = d.average_o3
         city_list.append({
             'cityName': province_data.get(d.province_id),
-            'value': value
+            'value': "{:.2f}".format(value)
         })
     return JsonResponse({
         'city_list': city_list
