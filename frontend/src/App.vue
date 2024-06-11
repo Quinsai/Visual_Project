@@ -16,6 +16,9 @@ import BarChart from "./components/BarChart.vue";
         <SelectYear></SelectYear>
       </div>
     </div>
+    <div class="out-of-areaChart">
+        <AreaChart></AreaChart>
+    </div>
     <div class="out-of-graphic">
       <div class="out-of-map">
         <Map></Map>
@@ -23,12 +26,9 @@ import BarChart from "./components/BarChart.vue";
       <div class="out-of-aqiline">
         <AqiLine></AqiLine>
       </div>
-      <div class="out-of-map">
-        <AreaChart></AreaChart>
-      </div>
-      <!-- <div class="out-of-map">
-        <BarChart></BarChart>
-      </div> -->
+    </div>
+    <div class="out-of-barChart">
+      <BarChart></BarChart>
     </div>
   </div>
 </template>
@@ -56,20 +56,28 @@ import BarChart from "./components/BarChart.vue";
     }
   }
   .out-of-graphic {
-    width: 100%;
+    width: 50%;
     height: 88%;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     .out-of-map {
-      width: 70%;
+      width: 100%;
       height: 75%;
     }
     .out-of-aqiline {
-      width: 70%;
+      width: 100%;
       height: 25%;
     }
+  }
+  .out-of-areaChart {
+    width: 25%;
+    height: 88%;
+  }
+  .out-of-barChart {
+    width: 25%;
+    height: 88%;
   }
 }
 </style>

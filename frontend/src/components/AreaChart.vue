@@ -23,10 +23,10 @@ const loadAreaChart = async(year, province_id) => {
     var option;
 
     option = {
-        color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
-        title: {
-            text: 'Area Chart'
-        },
+        color: ['#8dd3c7', '#bebada', '#fdb462', '#80b1d3', '#fb8072'],
+        // title: {
+        //     text: 'Area Chart'
+        // },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -45,14 +45,15 @@ const loadAreaChart = async(year, province_id) => {
             bottom: '3%',
             containLabel: true
         },
-        xAxis: [
+        yAxis: [
             {
                 type: 'category',
                 boundaryGap: false,
+                inverse: true,
                 data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             }
         ],
-        yAxis: [
+        xAxis: [
             {
                 type: 'value'
             }
@@ -72,11 +73,7 @@ const loadAreaChart = async(year, province_id) => {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                     {
                         offset: 0,
-                        color: 'rgb(128, 255, 165)'
-                    },
-                    {
-                        offset: 1,
-                        color: 'rgb(1, 191, 236)'
+                        color: '#8dd3c7'
                     }
                     ])
                 },
@@ -99,11 +96,7 @@ const loadAreaChart = async(year, province_id) => {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                     {
                         offset: 0,
-                        color: 'rgb(0, 221, 255)'
-                    },
-                    {
-                        offset: 1,
-                        color: 'rgb(77, 119, 255)'
+                        color: '#bebada'
                     }
                     ])
                 },
@@ -126,11 +119,7 @@ const loadAreaChart = async(year, province_id) => {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                     {
                         offset: 0,
-                        color: 'rgb(55, 162, 255)'
-                    },
-                    {
-                        offset: 1,
-                        color: 'rgb(116, 21, 219)'
+                        color: '#fdb462'
                     }
                     ])
                 },
@@ -153,11 +142,7 @@ const loadAreaChart = async(year, province_id) => {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                     {
                         offset: 0,
-                        color: 'rgb(255, 0, 135)'
-                    },
-                    {
-                        offset: 1,
-                        color: 'rgb(135, 0, 157)'
+                        color: '#80b1d3'
                     }
                     ])
                 },
@@ -184,11 +169,7 @@ const loadAreaChart = async(year, province_id) => {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                     {
                         offset: 0,
-                        color: 'rgb(255, 191, 0)'
-                    },
-                    {
-                        offset: 1,
-                        color: 'rgb(224, 62, 76)'
+                        color: '#fb8072'
                     }
                     ])
                 },
@@ -232,6 +213,6 @@ watch(
 <style lang="scss" scoped>
     #chart-container {
         height: 100%;
-        width: 80%;
+        width: 100%;
     }
 </style>

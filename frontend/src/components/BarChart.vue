@@ -18,21 +18,38 @@ onMounted(async() => {
     var option;
 
     option = {
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [
-        {
-        data: [120, 200, 150, 80, 70, 110, 130],
-        type: 'bar'
-        }
-    ]
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+            type: 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        yAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            inverse: true,
+            axisTick: {
+                alignWithLabel: true
+            }
+        },
+        xAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: [120, 200, 150, 80, 70, 110, 130],
+                type: 'bar'
+            }
+        ]
     };
 
+    // option.yAxis.data.push('opp');
     option && myChart.setOption(option);
 })
 
@@ -45,6 +62,6 @@ onMounted(async() => {
 <style lang="scss" scoped>
     #main {
         height: 100%;
-        width: 80%;
+        width: 100%;
     }
 </style>
