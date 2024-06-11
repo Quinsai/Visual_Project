@@ -43,7 +43,8 @@ const loadAreaChart = async(year, province_id) => {
             left: '3%',
             right: '4%',
             bottom: '3%',
-            containLabel: true
+            containLabel: true,
+            x: 500
         },
         yAxis: [
             {
@@ -188,7 +189,7 @@ const loadAreaChart = async(year, province_id) => {
         option.series[3].data.push(monthList[i].NO2);
         option.series[4].data.push(monthList[i].O3);
     }
-    
+
     option && myChart.setOption(option);
 }
 

@@ -10,7 +10,12 @@ import BarChart from "./components/BarChart.vue";
   <div class="out-of-global">
     <div class="out-of-title">
       <div class="title">
-        空气质量监测
+        <div class="title-cn">
+          空气质量分析
+        </div>
+        <div class="title-en">
+          Air Pollutants Analysis
+        </div>
       </div>
       <div class="out-of-year-select">
         <SelectYear></SelectYear>
@@ -39,20 +44,36 @@ import BarChart from "./components/BarChart.vue";
   height: 100vh;
   display: flex;
   flex-wrap: wrap;
+  background: #f0f0f0;
   .out-of-title {
     width: 100%;
     height: 12%;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-wrap: nowrap;
+    background: #c9dbff;
     .title {
       height: fit-content;
-      font-size: 20px;
+      position: relative;
+      left: 30px;
+      display: flex;
+      flex-wrap: nowrap;
+      color: #083cae;
+      .title-cn {
+        font-size: 32px;
+        font-family: STZhongsong,serif;
+      }
+      .title-en {
+        position: relative;
+        left: 10px;
+        font-size: 35px;
+        font-family: "Californian FB",serif;
+      }
     }
     .out-of-year-select {
       position: absolute;
-      right: 10px;
+      right: 55px;
     }
   }
   .out-of-graphic {

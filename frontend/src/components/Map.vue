@@ -76,6 +76,10 @@ const getDataAndLoadMap = async (year) => {
       },
       data: {
         provinceId: provinceData[i].province_id
+      },
+      grid: {
+        x: 800,
+        y: 800
       }
     })
   }
@@ -114,6 +118,11 @@ watch(
     }
   }
 )
+
+onMounted(() => {
+  let container = document.getElementById('map-container')
+  console.log(container.children)
+})
 </script>
 
 <template>
@@ -138,18 +147,20 @@ watch(
   height: 100%;
   display: flex;
   flex-wrap: nowrap;
+  position: relative;
+  bottom: 8vh;
   .legend-outer {
     height: 100%;
-    width: 250px;
+    width: 80px;
     position: relative;
-    left: 14%;
+    left: 40px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: flex-end;
     .legend-item-outer {
       width: 100%;
-      height: 10%;
+      height: 7%;
       display: flex;
       flex-wrap: nowrap;
       .color-outer {
@@ -159,8 +170,8 @@ watch(
         justify-content: center;
         align-items: center;
         .color {
-          height: 20px;
-          width: 20px;
+          height: 12px;
+          width: 12px;
         }
       }
       .range-outer {
@@ -170,7 +181,7 @@ watch(
         justify-content: flex-start;
         align-content: center;
         .range {
-          font-size: 20px;
+          font-size: 12px;
           display: flex;
           align-items: center;
         }
@@ -178,8 +189,10 @@ watch(
     }
   }
   .map-container {
-    height: 100%;
+    position: relative;
+    top: 5vh;
     width: 100%;
+    height: 100%;
   }
 }
 </style>

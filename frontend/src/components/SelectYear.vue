@@ -11,7 +11,7 @@ const handleSelect = (value) => {
 
 <template>
   <a-dropdown @select="value => handleSelect(value)">
-    <a-button>{{ year.getSelectedYear }}</a-button>
+    <a-button type="primary">{{ year.getSelectedYear }}</a-button>
     <template #content>
       <a-doption :value="2013">2013</a-doption>
       <a-doption :value="2014">2014</a-doption>

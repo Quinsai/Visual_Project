@@ -18,7 +18,6 @@ const getDataAndLoadLine = async (year, provinceId) => {
     }
   })
   let provinceData = response.data.month_list
-  console.log(provinceData)
 
   let xData = []
   let aqiData = []
@@ -80,6 +79,8 @@ watch(
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
+  bottom: 13vh;
   .line {
     height: 150%;
     width: 100%;
@@ -90,6 +91,11 @@ watch(
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    bottom: 5vh;
+    .legend-of-aqi-line {
+      font-family: STXihei,serif;
+    }
   }
 }
 </style>
