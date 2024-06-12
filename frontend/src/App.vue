@@ -46,6 +46,7 @@ import BarChart from "./components/BarChart.vue";
   flex-wrap: wrap;
   background: #f0f0f0;
   padding-bottom: 5px;
+  overflow: hidden;
   .out-of-title {
     width: 100%;
     height: 12%;
