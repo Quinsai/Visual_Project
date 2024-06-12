@@ -35,7 +35,8 @@ const loadBarChart = async(year, pollutant_id, pollutant_name) => {
             }
         },
         grid: {
-            left: '3%',
+            top: '3%',
+            left: '1%',
             right: '4%',
             bottom: '3%',
             containLabel: true
@@ -118,9 +119,7 @@ const map = [
 
 <style lang="scss" scoped>
 #main {
-  height: 100%;
+  height: 95%;
   width: 100%;
-  position: relative;
-  bottom: 10px;
 }
 </style>
