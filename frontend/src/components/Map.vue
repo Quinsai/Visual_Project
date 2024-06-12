@@ -148,7 +148,7 @@ onMounted(() => {
   display: flex;
   flex-wrap: nowrap;
   position: relative;
-  bottom: 8vh;
+  top: -10vh;
   .legend-outer {
     height: 100%;
     width: 80px;
@@ -190,7 +190,6 @@ onMounted(() => {
   }
   .map-container {
     position: relative;
-    top: 5vh;
     width: 100%;
     height: 100%;
   }

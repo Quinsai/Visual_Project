@@ -80,7 +80,7 @@ watch(
   flex-wrap: wrap;
   justify-content: center;
   position: relative;
-  bottom: 13vh;
+  top: -15vh;
   .line {
     height: 150%;
     width: 100%;
