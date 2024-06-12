@@ -96,20 +96,32 @@ const map = [
 </script>
 
 <template>
-    <a-select  
-        :style="{width: '40%', height: '5%', background: 'rgb(22, 93, 255)', color: 'white'}"  
-        @change="(item) => handleSelect(item)"
-        v-model="value"
-        :default-value="map[0]"
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <a-select
+      :style="{
+        width: '40%',
+        height: '5%',
+        background: 'rgb(22, 93, 255)',
+        color: 'white',
+        position: 'relative',
+        left: '16px',
+        top: '13px'
+      }"
+      @change="(item) => handleSelect(item)"
+      v-model="value"
+      :default-value="map[0]"
     >
-        <a-option v-for="item of map" :value="item" :label="item.label" />
+      <a-option v-for="item of map" :value="item" :label="item.label" />
     </a-select>
-    <div id="main"></div>
+  </div>
+  <div id="main"></div>
 </template>
 
 <style lang="scss" scoped>
-    #main {
-        height: 95%;
-        width: 100%;
-    }
+#main {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  bottom: 35px;
+}
 </style>
