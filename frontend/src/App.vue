@@ -41,10 +41,11 @@ import BarChart from "./components/BarChart.vue";
 <style lang="scss" scoped>
 .out-of-global {
   width: 100vw;
-  height: 100vh;
+  height: 130vh;
   display: flex;
   flex-wrap: wrap;
   background: #f0f0f0;
+  padding-bottom: 5px;
   .out-of-title {
     width: 100%;
     height: 12%;

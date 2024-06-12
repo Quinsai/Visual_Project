@@ -1,17 +1,23 @@
 <script setup>
-import {onMounted} from "vue";
+import {onMounted, watch} from "vue";
 import * as echarts from "echarts";
 import axios from "axios";
 import {prefixUrl} from "@/main.js";
+import {useYearStore} from "@/stores/year.js";
+import {usePollutantStore} from "@/stores/pollutant.js";
 
-onMounted(async() => {
-    // const response = await axios.get(prefixUrl + "/api/province/allPollutants", {
-    //   params: {
-    //     year: 2013,
-    //     province: '上海'
-    //   }
-    // })
-    // const monthList = response.data.month_list;
+const year = useYearStore()
+const pollutant = usePollutantStore()
+
+const loadBarChart = async(year, pollutant_id, pollutant_name) => {
+    const response = await axios.get(prefixUrl + "/api/provinces/onePollutant", {
+      params: {
+        year: year,
+        pollutant_id: pollutant_id
+      }
+    })
+    const cityList = response.data.city_list;
+    console.log(response.data.city_list)
 
     var chartDom = document.getElementById('main');
     var myChart = echarts.init(chartDom);
@@ -21,7 +27,11 @@ onMounted(async() => {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-            type: 'shadow'
+                type: 'shadow',
+            },
+            valueFormatter: (value) => {
+                if(pollutant_id == 4) return value + ' mg/m³'
+                else return value + ' μg/m³'
             }
         },
         grid: {
@@ -32,7 +42,7 @@ onMounted(async() => {
         },
         yAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: [],
             inverse: true,
             axisTick: {
                 alignWithLabel: true
@@ -43,25 +53,63 @@ onMounted(async() => {
         },
         series: [
             {
-                data: [120, 200, 150, 80, 70, 110, 130],
+                name: pollutant_name,
+                data: [],
                 type: 'bar'
             }
         ]
     };
 
-    // option.yAxis.data.push('opp');
-    option && myChart.setOption(option);
-})
+    for (let i = 0; i < cityList.length; i++) {
+        option.yAxis.data.push(cityList[i].cityName);
+        option.series[0].data.push(cityList[i].value);
+    }
 
+    option && myChart.setOption(option);
+}
+
+onMounted(() => {
+    loadBarChart(2013, 0, 'PM2.5')
+})
+watch(
+  () => [year.getSelectedYear, pollutant.getSelectedPollutant.pollutantId],
+  (value, oldValue) => {
+    if (value !== oldValue) {
+        loadBarChart(year.getSelectedYear, pollutant.getSelectedPollutant.pollutantId, pollutant.getSelectedPollutant.pollutantName)
+    }
+  }
+)
+
+const handleSelect = (item) => {
+    console.log(item)
+    pollutant.setSelectedPollutant(pollutant, item.value, item.label)
+}
+
+const map = [
+    {value: 0, label: 'PM2.5'},
+    {value: 1, label: 'PM10'},
+    {value: 2, label: 'SO2'},
+    {value: 3, label: 'NO2'},
+    {value: 4, label: 'CO'},
+    {value: 5, label: 'O3'},
+]
 </script>
 
 <template>
+    <a-select  
+        :style="{width: '40%', height: '5%', background: 'rgb(22, 93, 255)', color: 'white'}"  
+        @change="(item) => handleSelect(item)"
+        v-model="value"
+        :default-value="map[0]"
+    >
+        <a-option v-for="item of map" :value="item" :label="item.label" />
+    </a-select>
     <div id="main"></div>
 </template>
 
 <style lang="scss" scoped>
     #main {
-        height: 100%;
+        height: 95%;
         width: 100%;
     }
 </style>
