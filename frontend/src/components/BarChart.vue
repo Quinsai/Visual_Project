@@ -105,7 +105,6 @@ const map = [
         color: 'white',
         position: 'relative',
         left: '16px',
-        top: '13px'
       }"
       @change="(item) => handleSelect(item)"
       v-model="value"
@@ -122,6 +121,6 @@ const map = [
   height: 100%;
   width: 100%;
   position: relative;
-  bottom: 35px;
+  bottom: 10px;
 }
 </style>
