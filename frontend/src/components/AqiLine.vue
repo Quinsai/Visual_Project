@@ -95,6 +95,7 @@ watch(
     bottom: 5vh;
     .legend-of-aqi-line {
       font-family: STXihei,serif;
+      color: black;
     }
   }
 }

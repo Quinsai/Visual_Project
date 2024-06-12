@@ -184,6 +184,7 @@ onMounted(() => {
           font-size: 12px;
           display: flex;
           align-items: center;
+          color: black;
         }
       }
     }
